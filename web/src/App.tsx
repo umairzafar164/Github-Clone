@@ -1,7 +1,5 @@
-import React from 'react';
-
-import './App.css';
+import REPO_LIST from './components/repoList';
 
 export function App() {
-  return <div />;
+  return <REPO_LIST />;
 }

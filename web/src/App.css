@@ -1,0 +1,35 @@
+.text-primary{
+    color: cornflowerblue; 
+  }
+  .flex {
+    display: flex;
+  }
+  
+  .items-center {
+    align-items: center;
+  }
+  
+  .justify-center {
+    justify-content: center;
+  }
+  
+  .justify-between {
+    justify-content: space-between;
+  }
+  
+  .highlight-on-hover:hover {
+    transition: 0.25s all;
+    background-color: rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+  }
+  .mr-2 {
+    margin-right: 0.5rem !important;
+  }
+  .ml-2 {
+    margin-left: 0.5rem !important;
+  }
+  .mt-2 {
+    margin-top: 0.5rem !important;
+  }
+  
+  
