@@ -1,13 +1,16 @@
 import { useEffect, useState } from 'react';
 import HttpRepo from '../rest/http.repo';
+import REPO_DETAIL from './repoDetail';
 import { IRepo } from '../interfaces/repo.interface';
 import { toast } from 'react-toastify';
 import { List, Row, Col } from 'antd';
 import { AiOutlineFork } from 'react-icons/ai';
 import { HiLanguage } from 'react-icons/hi2';
+import '../styles/styles.css';
 
 const REPO_LIST = () => {
   const [repos, setRepos] = useState([] as any);
+  const [selectedRepoData, setSelectedRepoData] = useState<any>(undefined);
 
   useEffect(() => {
     HttpRepo.getAll()
@@ -23,6 +26,22 @@ const REPO_LIST = () => {
         toast.error('Sorry! There is an error at the backend.');
       });
   }, []);
+
+  const setRepoDetails = (item: any) => {
+    if (item === undefined) {
+      setRepoDetails(undefined);
+    } else if (repos) {
+      const owner = item.owner.login;
+      const repoName = item.name;
+      HttpRepo.getCommitHistory(owner, repoName)
+        .then((data) => {
+          setSelectedRepoData(data);
+        })
+        .catch((err) => {
+          toast.error('Commit history does not exist.');
+        });
+    }
+  };
   return (
     <>
       <Row>
@@ -32,7 +51,12 @@ const REPO_LIST = () => {
               itemLayout="vertical"
               dataSource={repos}
               renderItem={(item: IRepo) => (
-                <List.Item className="highlight-on-hover">
+                <List.Item
+                  className="highlight-on-hover"
+                  onClick={(e: any) => {
+                    setRepoDetails(item);
+                  }}
+                >
                   <List.Item.Meta
                     title={<p className="text-primary">{item.name}</p>}
                     description={
@@ -54,6 +78,11 @@ const REPO_LIST = () => {
                 </List.Item>
               )}
             />
+          </div>
+        </Col>
+        <Col span={16}>
+          <div className="ml-2">
+            <REPO_DETAIL selectedRepoData={selectedRepoData} />
           </div>
         </Col>
       </Row>
