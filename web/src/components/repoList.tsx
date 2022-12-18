@@ -11,6 +11,7 @@ import '../styles/styles.css';
 const REPO_LIST = () => {
   const [repos, setRepos] = useState([] as any);
   const [selectedRepoData, setSelectedRepoData] = useState<any>(undefined);
+  const [selectedRepoWiki, setSelectedRepoWiki] = useState<any>(undefined);
 
   useEffect(() => {
     HttpRepo.getAll()
@@ -27,6 +28,16 @@ const REPO_LIST = () => {
       });
   }, []);
 
+  const getRepoWiki = (owner: string, repoName: string) => {
+    HttpRepo.getRepoWiki(owner, repoName)
+      .then((data) => {
+        setSelectedRepoWiki(data);
+      })
+      .catch((err) => {
+        toast.warn('No Readme.md file found');
+      });
+  };
+
   const setRepoDetails = (item: any) => {
     if (item === undefined) {
       setRepoDetails(undefined);
@@ -36,12 +47,14 @@ const REPO_LIST = () => {
       HttpRepo.getCommitHistory(owner, repoName)
         .then((data) => {
           setSelectedRepoData(data);
+          getRepoWiki(owner, repoName);
         })
         .catch((err) => {
           toast.error('Commit history does not exist.');
         });
     }
   };
+
   return (
     <>
       <Row>
@@ -82,7 +95,10 @@ const REPO_LIST = () => {
         </Col>
         <Col span={16}>
           <div className="ml-2">
-            <REPO_DETAIL selectedRepoData={selectedRepoData} />
+            <REPO_DETAIL
+              selectedRepoData={selectedRepoData}
+              selectedRepoWiki={selectedRepoWiki}
+            />
           </div>
         </Col>
       </Row>
