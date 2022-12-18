@@ -33,7 +33,9 @@ const REPO_LIST = () => {
         );
       })
       .catch((err) => {
-        toast.error('Sorry! There is an error at the backend.');
+        toast.error('Sorry! There is an error at the backend.', {
+          toastId: 'backend_error',
+        });
       });
   }, []);
 
@@ -43,7 +45,7 @@ const REPO_LIST = () => {
         setSelectedRepoWiki(data);
       })
       .catch((err) => {
-        toast.warn('No Readme.md file found');
+        toast.warn('No Readme.md file found', { toastId: 'no_readme' });
       });
   };
 
@@ -59,7 +61,9 @@ const REPO_LIST = () => {
           getRepoWiki(owner, repoName);
         })
         .catch((err) => {
-          toast.error('Commit history does not exist.');
+          toast.error('Commit history does not exist.', {
+            toastId: 'no_commit_history',
+          });
         });
     }
   };

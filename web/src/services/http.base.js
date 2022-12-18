@@ -18,9 +18,13 @@ export default class HttpBase {
 
   errorHandlerBase = (error) => {
     if (error.response?.status === 404) {
-      toast.error('Commit history does not exist.');
+      toast.error('Commit history does not exist.', {
+        toastId: 'commit_history',
+      });
     } else {
-      toast.error('Unknown error received. Please contact administrator.');
+      toast.error('Unknown error received. Please contact administrator.', {
+        toastId: 'contact_administrator',
+      });
     }
 
     return undefined;
