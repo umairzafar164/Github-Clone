@@ -13,7 +13,7 @@ const REPO_LIST = () => {
   const [filteredRepos, setFilteredRepos] = useState([] as any); // Repos that are being rendered on the screen
   const [selectedRepoData, setSelectedRepoData] = useState<any>(undefined);
   const [selectedRepoWiki, setSelectedRepoWiki] = useState<any>(undefined);
-  const [languages, setLanguages] = useState([]);
+  const [languages, setLanguages] = useState([]); // Repos with unique languages to render language filter buttons dynamically
 
   useEffect(() => {
     HttpRepo.getAll()
@@ -70,7 +70,9 @@ const REPO_LIST = () => {
 
   const filtering = (language: any) => {
     setFilteredRepos([...repos]);
-    setFilteredRepos([...repos.filter((r: any) => r.language === language)]);
+    setFilteredRepos([
+      ...repos.filter((repo: any) => repo.language === language),
+    ]);
   };
 
   const viewAll = () => {
