@@ -31,5 +31,10 @@
   .mt-2 {
     margin-top: 0.5rem !important;
   }
-  
+  .mt-50 {
+    margin-top: 50%;
+  }
+  .ml-50 {
+    margin-left: 50%;
+  }
   
